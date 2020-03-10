@@ -1,8 +1,7 @@
 require "tty-prompt"
-class CreateItem
-    def initialize
-    end
-
+# class CreateItem
+    # def initialize
+    # end
     def customise_coffee
         prompt = TTY::Prompt.new
         coffee_type = prompt.select("Please choose coffee type") do |menu|
@@ -44,7 +43,6 @@ class CreateItem
             menu.choice 'decaf'
             menu.choice 'warm'
         end
-        system("clear")
         return customised_coffee = [coffee_type,coffee_size,coffee_milk,coffee_sugar,coffee_extra]
     end
     def pricing_coffee(a,b)
@@ -74,6 +72,7 @@ class CreateItem
             menu.choice 'REMOVE' 
             menu.choice 'PAY'
             menu.choice 'REVIEW'
+            menu.choice 'EXIT'
         end
         return options
     end
@@ -81,29 +80,50 @@ class CreateItem
         puts "Welcome to Coder Coffee"
         puts 'Would you like to plece an order?'
     end
-end
+# end
 
 
-coffee_user1 = CreateItem.new()
+# coffee_user1 = CreateItem.new()
 
-coffee_user1.greeting()
+greeting()
 order_list_array = []
-while true
-    customised_coffee = coffee_user1.customise_coffee
-    puts "you have chosen a #{customised_coffee[1]} #{customised_coffee[0]} with #{customised_coffee[2]} and with #{customised_coffee[3]} (other request: #{customised_coffee[4]})"
-    order_list_array.push 
-    puts order_list_array
-    # price_list = coffee_user1.pricing_coffee(customised_coffee[1],customised_coffee[2])
-    
-    option = coffee_user1.show_menu_option()
 
-    if option == "ADD"
-        customised_coffee = coffee_user1.customise_coffee
-    elsif option == "REVIEW"
-        puts 
-    elsif option == "PAY"
-        return false
+customised_coffee = customise_coffee()
+puts "you have chosen a #{customised_coffee[1]} #{customised_coffee[0]} with #{customised_coffee[2]} and with #{customised_coffee[3]} (other request: #{customised_coffee[4]})"
+order_list_array.push customised_coffee
+price_list = 0
+price_list = pricing_coffee(customised_coffee[1],customised_coffee[2])
+    
+x = 0
+while x == 0 
+    option = show_menu_option()
+    case option
+    when "ADD"
+        customised_coffee = customise_coffee()
+        puts "you have chosen a #{customised_coffee[1]} #{customised_coffee[0]} with #{customised_coffee[2]} and with #{customised_coffee[3]} (other request: #{customised_coffee[4]})"
+        order_list_array.push customised_coffee
+        price_list += pricing_coffee(customised_coffee[1],customised_coffee[2])
+        x == 0 
+    when "REVIEW"
+        p order_list_array
+        p price_list
+        x == 0
+    when "PAY"
+        puts "Thank you for your order"
+        puts "It's going to be $#{price_list} for today"
+        puts "Thank you"
+        x == 1
+        exit
+    when "REMOVE"
+        p order_list_array
+        p price_list
+        puts "which number of coffee would like to remove from list?"
+        number = gets.chomp
+        order_list_array[number.to_i].shift(5)
+        p order_list_array
+        p price_list
+        x == 0
     else
-        return false
+        exit
     end
 end
