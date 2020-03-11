@@ -1,4 +1,5 @@
 require "tty-prompt"
+
 class Coffee
     attr_reader :type, :size, :milk, :sugar, :extra
     def initialize(type, size, milk, sugar, extra)
@@ -63,7 +64,7 @@ def customise_coffee
     return Coffee.new(coffee_type,coffee_size,coffee_milk,coffee_sugar,coffee_extra)
 end
 
-class Price 
+class Price < Coffee
     attr_reader :indivisual_coffee_price
     def initialize(price)
         @indivisual_coffee_price = price 
@@ -92,7 +93,6 @@ def pricing_coffee(size,milk,type)
     when 'Esppresso'
         coffee_price += 2.5
     end
-
     return Price.new(coffee_price)
 end
 
@@ -108,31 +108,36 @@ def show_menu_option
     return options
 end
 
+class OrderList < Price
+    attr_reader :order_list_array
+    def initialize
+        @order_list_array = []
+    end
+    def  show_order_list
+        for x in 0..(order_list_array.length - 1)
+            puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} with #{order_list_array[x].milk}"
+        end 
+    end
+end
+
 def greeting
     puts "Welcome to Coder Coffee"
     puts "First, please type your name"
     name = gets.chomp
-    puts "Thank you, #{name}"
+    system 'clear'
+    puts "Hi, #{name}"
     puts 'Would you like to plece an order today?'
 end
 
-def show_order_list(instance)
-    for x in 0..(order_list_array.length - 1)
-        puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} with #{order_list_array[x].milk}"
-    end 
-end
-
-
 greeting()
-
-order_list_array = []
 customised_coffee = customise_coffee()
 #customised_coffee is an instance of Coffee class
 puts "you have chosen a #{customised_coffee.size} #{customised_coffee.type} with #{customised_coffee.milk} and with #{customised_coffee.sugar} (other request: #{customised_coffee.extra})"
+order_list_array = []
 order_list_array.push customised_coffee
-price_list = 0
+price_list = []
 # price_list += pricing_coffee(customised_coffee.size,customised_coffee.milk).to_s
-price_list += pricing_coffee(customised_coffee.size,customised_coffee.milk,customised_coffee.type).indivisual_coffee_price
+price_list.push pricing_coffee(customised_coffee.size,customised_coffee.milk,customised_coffee.type).indivisual_coffee_price
 exit = false
 while exit == false 
     option = show_menu_option()
@@ -142,19 +147,18 @@ while exit == false
         puts "you have chosen a #{customised_coffee.size} #{customised_coffee.type} with #{customised_coffee.milk} and with #{customised_coffee.sugar} (other request: #{customised_coffee.extra})"
         order_list_array.push customised_coffee
         # price_list += pricing_coffee(customised_coffee.size,customised_coffee.milk).to_s
-        price_list += pricing_coffee(customised_coffee.size,customised_coffee.milk,customised_coffee.type).indivisual_coffee_price
+        price_list.push pricing_coffee(customised_coffee.size,customised_coffee.milk,customised_coffee.type).indivisual_coffee_price
     when "REVIEW"
         system 'clear'
         puts "YOUR ORDER LIST"
         for x in 0..(order_list_array.length - 1)
         puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} with #{order_list_array[x].milk}"
         end
-        puts "Total bill is $#{price_list} so far"
+        puts "Total bill is $#{price_list.inject(:+)} so far"
     when "PAY"
         system 'clear'
         puts "Thank you for your order"
-        puts "It's going to be $#{price_list} for today"
-        puts "Thank you"
+        puts "It's going to be $#{price_list.inject(:+)} for today"
         exit = true
     when "REMOVE"
         system 'clear'
@@ -163,17 +167,20 @@ while exit == false
         for x in 0..(order_list_array.length - 1)
         puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} with #{order_list_array[x].milk}"
         end
-        puts "Total bill is $#{price_list} so far"
+        puts "Total bill is $#{price_list.inject(:+)} so far"
         puts "which number of coffee would like to remove from list?"
         number = gets.chomp
+        p price_list
         order_list_array.delete_at(number.to_i-1)
+        price_list.delete_at(number.to_i-1)
         system 'clear'
+        puts price_list.inject(:+)
         puts "NoW, YOUR ORDER LIST"
         for x in 0..(order_list_array.length - 1)
         puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} with #{order_list_array[x].milk}"
         end
 
-        p price_list
+        puts "Now you total bill is #{price_list.inject(:+)}"
     when "EXIT"
         exit = true
     end
