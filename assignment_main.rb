@@ -1,7 +1,7 @@
 require "tty-prompt"
 
 class Coffee
-    attr_reader :type, :size, :milk, :sugar, :extra
+attr_reader :type, :size, :milk, :sugar, :extra
     def initialize(type, size, milk, sugar, extra)
         @type = type
         @size = size
@@ -61,6 +61,7 @@ def customise_coffee
         menu.choice 'warm'
     end
     # return customised_coffee = [coffee_type,coffee_size,coffee_milk,coffee_sugar,coffee_extra]
+    
     return Coffee.new(coffee_type,coffee_size,coffee_milk,coffee_sugar,coffee_extra)
 end
 
@@ -75,30 +76,30 @@ def pricing_coffee(size,milk,type)
     coffee_price = 0
     case size
     when "Small"
-        coffee_price += 3.5
+        coffee_price += 3.50
     when "Medium"
-        coffee_price += 4
+        coffee_price += 4.00
     when "Large"
-        coffee_price += 5
+        coffee_price += 5.00
     end
 
     case milk
     when "Almond Milk", "Soy Milk"
-        coffee_price += 0.5
+        coffee_price += 0.50
     end
     
     case type
     when 'Piccolo', 'Double Esppresso'
-        coffee_price += 3
+        coffee_price += 3.00
     when 'Esppresso'
-        coffee_price += 2.5
+        coffee_price += 2.50
     end
     return Price.new(coffee_price)
 end
 
 def show_menu_option
     prompt = TTY::Prompt.new
-    options = prompt.select("MENU") do |menu|
+    options = prompt.select("SELECT MENU") do |menu|
         menu.choice 'ADD' 
         menu.choice 'REMOVE' 
         menu.choice 'PAY'
@@ -108,16 +109,18 @@ def show_menu_option
     return options
 end
 
-class OrderList < Price
-    attr_reader :order_list_array
-    def initialize
-        @order_list_array = []
-    end
-    def  show_order_list
-        for x in 0..(order_list_array.length - 1)
-            puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} with #{order_list_array[x].milk}"
-        end 
-    end
+# class OrderList < Coffee
+#     attr_accessor :order_list_array
+#     def initialize
+#         @order_list_array = []
+#     end
+    
+# end
+
+def show_order_list(order_list_array)
+    for x in 0..(order_list_array.length - 1)
+        puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} with #{order_list_array[x].milk}"
+    end 
 end
 
 def greeting
@@ -151,9 +154,7 @@ while exit == false
     when "REVIEW"
         system 'clear'
         puts "YOUR ORDER LIST"
-        for x in 0..(order_list_array.length - 1)
-        puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} with #{order_list_array[x].milk}"
-        end
+        show_order_list(order_list_array)
         puts "Total bill is $#{price_list.inject(:+)} so far"
     when "PAY"
         system 'clear'
@@ -162,11 +163,8 @@ while exit == false
         exit = true
     when "REMOVE"
         system 'clear'
-        p order_list_array
         puts "YOUR ORDER LIST"
-        for x in 0..(order_list_array.length - 1)
-        puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} with #{order_list_array[x].milk}"
-        end
+        show_order_list(order_list_array)
         puts "Total bill is $#{price_list.inject(:+)} so far"
         puts "which number of coffee would like to remove from list?"
         number = gets.chomp
@@ -176,10 +174,7 @@ while exit == false
         system 'clear'
         puts price_list.inject(:+)
         puts "NoW, YOUR ORDER LIST"
-        for x in 0..(order_list_array.length - 1)
-        puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} with #{order_list_array[x].milk}"
-        end
-
+        show_order_list(order_list_array)
         puts "Now you total bill is #{price_list.inject(:+)}"
     when "EXIT"
         exit = true
