@@ -5,9 +5,9 @@ require_relative 'price.rb'
 def show_menu_option
     prompt = TTY::Prompt.new
     options = prompt.select("SELECT MENU") do |menu|
-        menu.choice 'ADD ITEM TO LIST' 
-        menu.choice 'REMOVE FROM LIST' 
-        menu.choice 'CHECK YOUR ORDER'
+        menu.choice 'ADD ITEM TO MY ORDER' 
+        menu.choice 'REMOVE ITEM FROM MY ORDER' 
+        menu.choice 'VIEW MY ORDER'
         menu.choice 'CHECK OUT'
         menu.choice 'EXIT'
     end
@@ -18,6 +18,10 @@ def greeting
     puts "Welcome to Coder Coffee"
     puts "First, please type your name"
     name = gets.chomp
+    while name.empty?
+        puts "Please type your name"
+        name = gets.chomp
+    end
     system 'clear'
     puts "Hi, #{name}"
     puts 'Would you like to plece an order today?'
@@ -29,6 +33,8 @@ def show_order_list(order_list_array)
     end 
 end
 
+
+system 'clear'
 greeting()
 order_list_array = []
 price_list = []
@@ -42,37 +48,45 @@ exit = false
 while exit == false
     option = show_menu_option()
     case option
-    when "ADD ITEM TO LIST"
+    when "ADD ITEM TO MY ORDER"
         system 'clear'
         customised_coffee = customise_coffee()
         order_list_array.push customised_coffee
         price_list.push pricing_coffee(customised_coffee.size,customised_coffee.milk,customised_coffee.type).indivisual_coffee_price
-    when "CHECK YOUR ORDER"
+    when "VIEW MY ORDER"
+        prompt = TTY::Prompt.new
         system 'clear'
         puts "YOUR ORDER LIST"
         show_order_list(order_list_array)
-        puts "Total bill is $#{price_list.inject(:+)} so far"
+        total_price = price_list.inject(:+)
+        puts "Total bill is $#{total_price} so far"
+        prompt.yes?('Press Enter to go back to Menu')
     when "CHECK OUT"
         system 'clear'
+        prompt = TTY::Prompt.new
+        send_order = show_order_list(order_list_array)
+        total_price = price_list.inject(:+)
         puts "Thank you for your order"
-        puts "It's going to be $#{price_list.inject(:+)} for today"
+        puts "It's going to be $#{total_price} for today"
         exit = true
-    when "REMOVE FROM LIST"
+        prompt.yes?('Confirm your order? Yes: You order will be sent to waiting list.')
+        # download_csv(send_order,total_price)
+    when "REMOVE ITEM FROM MY ORDER"
+        prompt = TTY::Prompt.new
         system 'clear'
         puts "YOUR ORDER LIST"
         show_order_list(order_list_array)
         puts "Total bill is $#{price_list.inject(:+)} so far"
         puts "which number of coffee would like to remove from list?"
         number = gets.chomp
-        p price_list
-        # raise "Not items for the number " if number.to_i > order_list_array.length
         order_list_array.delete_at(number.to_i-1)
         price_list.delete_at(number.to_i-1)
         system 'clear'
         puts price_list.inject(:+)
         puts "NoW, YOUR ORDER LIST"
         show_order_list(order_list_array)
-        puts "Now you total bill is #{price_list.inject(:+)}"
+        puts "Now you total bill is $#{price_list.inject(:+)}"
+        prompt.yes?('Press Enter to go back to Menu.')
     when "EXIT"
         exit = true
     end
