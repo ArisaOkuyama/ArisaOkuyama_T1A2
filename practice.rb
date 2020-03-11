@@ -90,7 +90,7 @@ end
 
     def show_menu_option
         prompt = TTY::Prompt.new
-        options = prompt.select("MENU") do |menu|
+        options = prompt.select("MENU" ) do |menu|
             menu.choice 'ADD' 
             menu.choice 'REMOVE' 
             menu.choice 'PAY'
@@ -150,7 +150,7 @@ while exit == false
         system 'clear'
         p order_list_array
         p price_list
-    when "EXIT"
-    exit = true
+    else
+        exit
     end
 end
