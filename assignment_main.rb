@@ -36,12 +36,11 @@ end
 # end
 
 
-def download_csv(order_list_array)
+def download_csv(order_list_array,name)
     # To a file
     CSV.open("./file.csv", "w") do |csv|
-      csv << [order_list_array[0].type]
-      csv << [order_list_array[0].size]
-      csv << [order_list_array[0].milk]
+        csv << ["Coffee Order for #{name}"]
+        csv << [order_list_array]
      end
 end
 
@@ -101,7 +100,7 @@ while exit == false
         answer = gets.chomp
         if answer == 'Yes' or answer == 'yes' or  answer == 'y'
             puts "Thank you for your order, #{name}"
-            download_csv(order_list_array)
+            download_csv(order_list_array,name)
             exit = true
         end
         # download_csv(send_order,total_price)

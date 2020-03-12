@@ -1,3 +1,2 @@
-Flat White
-Small
-Full Milk
+Order for Arisa
+"[#<Coffee:0x00007fc63c989338 @type=""Flat White"", @size=""Medium"", @milk=""Skim Milk"", @sugar=""No sugar"", @extra=""No thank you"">, #<Coffee:0x00007fc63c9fbe38 @type=""Long Black"", @size=""Medium"", @milk=nil, @sugar=""No sugar"", @extra=""No thank you"">, #<Coffee:0x00007fc63c9eb0b0 @type=""Mocha"", @size=""Large"", @milk=""Full Milk"", @sugar=""No sugar"", @extra=""No thank you"">]"
