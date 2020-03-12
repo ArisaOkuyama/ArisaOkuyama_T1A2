@@ -5,7 +5,7 @@ require "tty-box"
 require 'colorize'
 require_relative './coffee'
 require_relative './name'
-
+require_relative './customisecoffee'
 
 def show_menu_option
     prompt = TTY::Prompt.new
@@ -19,12 +19,6 @@ def show_menu_option
     return options
 end
 
-def show_order_list(order_list)
-    for x in 0..(order_list.length - 1)
-        puts "[#{x+1}].#{order_list[x].size} #{order_list[x].type} #{order_list[x].milk} #{order_list[x].sugar} #{order_list[x].extra}"
-    end 
-end
-
 def download_csv(order_list,name)
     # To a file
     CSV.open("./file.csv", "w") do |csv|
@@ -33,12 +27,9 @@ def download_csv(order_list,name)
      end
 end
 
-# class CustomiseCoffee < Coffee
-#     def initialize
-#     end
-
-# end
-
+def show_order_list(order_list)
+    
+end
 
 # code starts from here
 system 'clear'
@@ -54,9 +45,11 @@ system 'clear'
 puts "Hi, #{name}"
 puts 'Would you like to plece an order today?'
 order_list = []
-order_list.push customise_coffee
+order_list.push CustomiseCoffee.new.customise_coffee
+# order_list.push customise_coffee
 # customise_coffee method creats instance of the coffee class and put into the array.
-show_order_list(order_list)
+# #show_order_list(order_list)
+puts order_list
 # shows what items has been put in the order list
 exit = false
 # defined exit veriable to exit from the loop below
@@ -67,19 +60,24 @@ while exit == false
     case selected_option
     when "Add another item to order"
         system 'clear'
-        order_list.push customise_coffee
+        order_list.push CustomiseCoffee.new.customise_coffee
         # adding new instance which is another customized coffee to the order list
     when "View order"
         prompt = TTY::Prompt.new
         system 'clear'
         puts "YOUR ORDER LIST"
-        show_order_list(order_list)
+        ## show_order_list(order_list)
+        for x in 0..(order_list.length - 1)
+            puts "[#{x+1}].#{order_list[x].size} #{order_list[x].type} #{order_list[x].milk} #{order_list[x].sugar} #{order_list[x].extra}"
+        end 
+        ##puts order_list
         puts "Total price is $#{total_price}"
         prompt.yes?('Press \'Enter\' or type \'y\' to go back to menu.')
     when "Check out"
         system 'clear'
         prompt = TTY::Prompt.new
-        show_order_list(order_list)
+        ##show_order_list(order_list)
+        puts order_list
         puts "Thank you for your order, #{name}"
         puts "Total price is $#{total_price}"
         puts "Type \'y\' to confirm your order, \'no\' to go back to Menu"
@@ -98,7 +96,8 @@ while exit == false
         prompt = TTY::Prompt.new
         system 'clear'
         puts "YOUR ORDER LIST"
-        show_order_list(order_list)
+        ##show_order_list(order_list)
+        puts order_list
         puts "Total price is $#{total_price}"
         puts "Type a number of coffee you like to remove."
         number = gets
@@ -112,7 +111,8 @@ while exit == false
         # need to minus 1 from number as deleteing using the index of order_list_array
         system 'clear'
         puts "YOUR ORDER LIST HAS BEEN CHANGED"
-        show_order_list(order_list)
+        ##show_order_list(order_list)
+        puts order_list
         total_price = order_list.map{|coffee| coffee.get_price}.inject(:+)
         # calculating totalprice again after deleting item from order_array_list
         puts "Total price is now $#{total_price}"
