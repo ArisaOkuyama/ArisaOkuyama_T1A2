@@ -1,6 +1,5 @@
 require "tty-prompt"
-require_relative 'coffee.rb'
-require_relative 'price.rb'
+require_relative './coffee'
 
 def show_menu_option
     prompt = TTY::Prompt.new
@@ -33,39 +32,32 @@ def show_order_list(order_list_array)
     end 
 end
 
-
 system 'clear'
 greeting()
 order_list_array = []
-price_list = []
+# price_list = []
 # customised_coffee is an instance of Coffee class
-customised_coffee = customise_coffee()
-order_list_array.push customised_coffee
-price_list.push pricing_coffee(customised_coffee.size,customised_coffee.milk,customised_coffee.type).indivisual_coffee_price
-
+order_list_array.push customise_coffee
 show_order_list(order_list_array)
 exit = false
 while exit == false
     option = show_menu_option()
+    total_price = order_list_array.map {|coffee| coffee.get_price}.inject(:+)
     case option
     when "ADD ITEM TO MY ORDER"
         system 'clear'
-        customised_coffee = customise_coffee()
-        order_list_array.push customised_coffee
-        price_list.push pricing_coffee(customised_coffee.size,customised_coffee.milk,customised_coffee.type).indivisual_coffee_price
+        order_list_array.push customise_coffee
     when "VIEW MY ORDER"
         prompt = TTY::Prompt.new
         system 'clear'
         puts "YOUR ORDER LIST"
         show_order_list(order_list_array)
-        total_price = price_list.inject(:+)
         puts "Total bill is $#{total_price} so far"
         prompt.yes?('Press Enter to go back to Menu')
     when "CHECK OUT"
         system 'clear'
         prompt = TTY::Prompt.new
         send_order = show_order_list(order_list_array)
-        total_price = price_list.inject(:+)
         puts "Thank you for your order"
         puts "It's going to be $#{total_price} for today"
         exit = true
@@ -76,16 +68,15 @@ while exit == false
         system 'clear'
         puts "YOUR ORDER LIST"
         show_order_list(order_list_array)
-        puts "Total bill is $#{price_list.inject(:+)} so far"
+        puts "Total bill is $#{total_price} so far"
         puts "which number of coffee would like to remove from list?"
         number = gets.chomp
         order_list_array.delete_at(number.to_i-1)
-        price_list.delete_at(number.to_i-1)
         system 'clear'
-        puts price_list.inject(:+)
         puts "NoW, YOUR ORDER LIST"
         show_order_list(order_list_array)
-        puts "Now you total bill is $#{price_list.inject(:+)}"
+        total_price = order_list_array.map{|coffee| coffee.get_price}.inject(:+)
+        puts "Now you total bill is $#{total_price}"
         prompt.yes?('Press Enter to go back to Menu.')
     when "EXIT"
         exit = true
