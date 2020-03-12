@@ -32,6 +32,12 @@ class Coffee
             end
             return coffee_price
         end
+
+        def get_list
+            
+            return order_list
+        end
+
 end
 
 def customise_coffee

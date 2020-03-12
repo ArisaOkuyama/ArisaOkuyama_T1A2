@@ -1,6 +1,8 @@
 require "tty-prompt"
+require "tty-font"
 require "csv"
-# require 'ruby_figlet'
+require "tty-box"
+require 'colorize'
 require_relative './coffee'
 
 def show_menu_option
@@ -10,17 +12,10 @@ def show_menu_option
         menu.choice 'Change/remove item from order' 
         menu.choice 'View order'
         menu.choice 'Check out'
-        menu.choice 'Exit'
+        menu.choice "Exit".colorize(:yellow)
     end
     return options
 end
-
-# class Get_name
-#     attr_reader :name
-#     def initialize(name)
-#         @name = name
-#     end 
-# end 
 
 def show_order_list(order_list_array)
     for x in 0..(order_list_array.length - 1)
@@ -47,7 +42,8 @@ end
 def greeting
     name = gets.chomp
     while name.empty?
-        puts "Please type your name"
+        box = TTY::Box.error("Please type your name")
+        print box
         name = gets.chomp
     end
     system 'clear'
@@ -57,9 +53,10 @@ end
 system 'clear'
 # two_lines = RubyFiglet::Figlet.new "Welcome to\nCoder Coffee", 'basic'
 # two_lines.show
-
-puts "Welcome to Coder Coffee"
-puts "First, please type your name."
+font = TTY::Font.new(:doom)
+puts font.write("Welcome   to", letter_spacing: 2)
+puts font.write("* Coder Coffee", letter_spacing: 2)
+puts "First, please type your name.".colorize(:blue)
 name = greeting
 #calling greeting method to get customer's name
 system 'clear'
@@ -100,6 +97,7 @@ while exit == false
         answer = gets.chomp
         if answer == 'Yes' or answer == 'yes' or  answer == 'y'
             puts "Thank you for your order, #{name}"
+            puts font.write("Bye Bye", letter_spacing: 2)
             download_csv(order_list_array,name)
             exit = true
         end

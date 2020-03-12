@@ -1,0 +1,15 @@
+current directory: /Users/arisaokuyama/project/ruby/assignment/assignment_terminal/src/vendor/gems/ruby/2.7.0/gems/ruby2d-0.9.4/ext/ruby2d
+/Users/arisaokuyama/.rbenv/versions/2.7.0/bin/ruby -I /Users/arisaokuyama/.rbenv/versions/2.7.0/lib/ruby/2.7.0 -r ./siteconf20200312-29956-1n9dgfw.rb extconf.rb
+creating Makefile
+
+current directory: /Users/arisaokuyama/project/ruby/assignment/assignment_terminal/src/vendor/gems/ruby/2.7.0/gems/ruby2d-0.9.4/ext/ruby2d
+make "DESTDIR=" clean
+
+current directory: /Users/arisaokuyama/project/ruby/assignment/assignment_terminal/src/vendor/gems/ruby/2.7.0/gems/ruby2d-0.9.4/ext/ruby2d
+make "DESTDIR="
+compiling ruby2d.c
+linking shared-object ruby2d/ruby2d.bundle
+
+current directory: /Users/arisaokuyama/project/ruby/assignment/assignment_terminal/src/vendor/gems/ruby/2.7.0/gems/ruby2d-0.9.4/ext/ruby2d
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 ruby2d.bundle ./.gem.20200312-29956-152sw0t/ruby2d
