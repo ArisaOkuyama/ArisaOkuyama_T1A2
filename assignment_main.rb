@@ -85,7 +85,6 @@ while exit == false
             puts font.write("Bye Bye", letter_spacing: 2).colorize(:blue)
             print = CustomiseCoffee.new.download_csv(name, order_list, total_price)
             exit = true
-           else
            end
         # upload_csv(send_order,total_price)
     when "Change/remove item from order"
@@ -112,6 +111,14 @@ while exit == false
         puts "Total price is now $#{total_price}"
         enter_exit
     when "Exit".colorize(:yellow)
-        exit = true
+        system 'clear'
+        prompt = TTY::Prompt.new(symbols: {marker: '⬡'})
+        answer = prompt.select("Are you sure you don't want coffee?") do |menu|
+            menu.choice 'Yes, I am sure'
+            menu.choice 'You are right. I might need coffee.'
+        end
+        if answer == 'Yes, I am sure'
+            exit = true
+        end
     end
 end
