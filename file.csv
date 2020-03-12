@@ -1,7 +1,8 @@
-2020-03-13 00:47:15 +1000
-COFFEE ORDER FOR 
-"[""Flat White"", ""Flat White""]"
-"[""Small"", ""Small""]"
-"[""Full Milk"", ""Full Milk""]"
-"[""No sugar"", ""No sugar""]"
-"[""No thank you"", ""No thank you""]"
+2020-03-13 00:52:26 +1000
+COFFEE ORDER FOR d
+"[""Flat White"", ""Cappuccino"", ""Flat White""]"
+"[""Small"", nil, ""Small""]"
+"[""Full Milk"", nil, ""Skim Milk""]"
+"[""No sugar"", ""2 sugar"", ""\e[0;31;49m5 sugar. Are you sure?\e[0m""]"
+"[""\e[0;31;49mExtra hot\e[0m"", ""half strangh"", ""warm""]"
+Total price $ 7.0

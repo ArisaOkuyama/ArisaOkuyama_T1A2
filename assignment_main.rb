@@ -27,11 +27,12 @@ end
 def enter_exit
     puts "Please press press any key to menu"
     enter = gets
-        while enter.empty?
-            "Please press press any key to menu"
-            enter = gets
-        end
+    while enter.empty?
+        "Please press press any key to menu"
+        enter = gets
+    end
 end
+
 # code starts from here
 system 'clear'
 font = TTY::Font.new(:doom)
@@ -80,7 +81,7 @@ while exit == false
             puts "Thank you for your order, #{name}"
             puts "You order has been sent."
             puts font.write("Bye Bye", letter_spacing: 2).colorize(:blue)
-            print = CustomiseCoffee.new.download_csv(name, order_list)
+            print = CustomiseCoffee.new.download_csv(name, order_list, total_price)
             exit = true
         end
         # upload_csv(send_order,total_price)

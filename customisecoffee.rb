@@ -1,9 +1,9 @@
 # require_relative './coffee'
 
 class CustomiseCoffee
-    attr_reader :type, :size, :milk, :sugar, :extra, :name
+    attr_reader :type, :size, :milk, :sugar, :extra
     
-    def download_csv(name, list)
+    def download_csv(name, list,total_price)
         # To a file
         CSV.open("./file.csv", "w") do |csv|
             csv << [Time.now]
@@ -13,6 +13,7 @@ class CustomiseCoffee
             csv << [list.map {|coffee| coffee.milk}]
             csv << [list.map {|coffee| coffee.sugar}]
             csv << [list.map {|coffee| coffee.extra}]
+            csv << ["Total price $ #{total_price}"]
          end
     end
 
@@ -50,7 +51,7 @@ class CustomiseCoffee
         end
         coffee_sugar = prompt.select("Would you like sugar in your coffee?") do |menu|
             menu.choice 'No sugar'
-            menu.choice 'half sugar'
+            menu.choice 'Half sugar'
             menu.choice '1 sugar'
             menu.choice '2 sugar'
             menu.choice '3 sugar'
@@ -61,13 +62,12 @@ class CustomiseCoffee
             puts 'Use ↑/↓ arrow keys, press Space to select and Enter to finish'
             menu.choice 'No thank you'
             menu.choice 'Extra hot'.colorize(:red)
-            menu.choice 'half strangh'
-            menu.choice 'quoter strangh'
-            menu.choice 'decaf'
-            menu.choice 'warm'
+            menu.choice 'Half strength'
+            menu.choice 'Quarter strength'
+            menu.choice 'Decaf'
+            menu.choice 'Make it Warm'
         end
-            # return customised_coffee = [coffee_type,coffee_size,coffee_milk,coffee_sugar,coffee_extra]
-            
-            return Coffee.new(coffee_type,coffee_size,coffee_milk,coffee_sugar,coffee_extra)
-        end
+        # return customised_coffee = [coffee_type,coffee_size,coffee_milk,coffee_sugar,coffee_extra]
+        return Coffee.new(coffee_type,coffee_size,coffee_milk,coffee_sugar,coffee_extra)
+    end
 end
