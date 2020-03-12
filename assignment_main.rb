@@ -95,7 +95,7 @@ while exit == false
             download_csv(order_list_array,name)
             exit = true
         end
-        # download_csv(send_order,total_price)
+        # upload_csv(send_order,total_price)
     when "Change/remove item from order"
         prompt = TTY::Prompt.new
         system 'clear'
