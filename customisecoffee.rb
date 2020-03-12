@@ -1,17 +1,28 @@
 # require_relative './coffee'
 
 class CustomiseCoffee
-    attr_reader 
-    def initialize
-
+    attr_reader :type, :size, :milk, :sugar, :extra, :name
+    
+    def download_csv(name, list)
+        # To a file
+        CSV.open("./file.csv", "w") do |csv|
+            csv << [Time.now]
+            csv << ["COFFEE ORDER FOR #{name}"]
+            csv << [list.map {|coffee| coffee.type}]
+            csv << [list.map {|coffee| coffee.size}]
+            csv << [list.map {|coffee| coffee.milk}]
+            csv << [list.map {|coffee| coffee.sugar}]
+            csv << [list.map {|coffee| coffee.extra}]
+         end
     end
+
     def customise_coffee
         prompt = TTY::Prompt.new(symbols: {marker: '⬡'})
         coffee_type = prompt.select("Please choose coffee type") do |menu|
             puts "Use ←/→ arrow keys for more choise"
             menu.choice 'Flat White'
             menu.choice 'Latte'
-            menu.choice 'Cappucino'
+            menu.choice 'Cappuccino'
             menu.choice 'Long Black'
             menu.choice 'Mocha'
             menu.choice 'Hot Chocolate'

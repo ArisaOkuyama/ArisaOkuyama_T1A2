@@ -1,2 +1,7 @@
-Coffee Order for mnb
-"[#<Coffee:0x00007f89ef05a6d8 @type=""Flat White"", @size=""Small"", @milk=""Full Milk"", @sugar=""No sugar"", @extra=""No thank you"">, #<Coffee:0x00007f89ef0638f0 @type=""Flat White"", @size=""Small"", @milk=""Full Milk"", @sugar=""No sugar"", @extra=""No thank you"">]"
+2020-03-13 00:47:15 +1000
+COFFEE ORDER FOR 
+"[""Flat White"", ""Flat White""]"
+"[""Small"", ""Small""]"
+"[""Full Milk"", ""Full Milk""]"
+"[""No sugar"", ""No sugar""]"
+"[""No thank you"", ""No thank you""]"
