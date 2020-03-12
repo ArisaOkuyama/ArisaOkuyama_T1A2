@@ -4,6 +4,8 @@ require "csv"
 require "tty-box"
 require 'colorize'
 require_relative './coffee'
+require_relative './name'
+
 
 def show_menu_option
     prompt = TTY::Prompt.new
@@ -31,32 +33,19 @@ def download_csv(order_list_array,name)
      end
 end
 
-def greeting
-    name = gets.chomp
-    while name.empty?
-        box = TTY::Box.error("Please type your name")
-        print box
-        name = gets.chomp
-    end
-    system 'clear'
-    return name
-end
-
+# code starts from here
 system 'clear'
-# two_lines = RubyFiglet::Figlet.new "Welcome to\nCoder Coffee", 'basic'
-# two_lines.show
 font = TTY::Font.new(:doom)
 puts font.write("Welcome   to", letter_spacing: 2).colorize(:yellow)
 puts font.write("* Coder Coffee", letter_spacing: 2).colorize(:yellow)
-
-print TTY::Box.frame {"*** Lets order your coffee through this terminal application **"}
-puts "First, please type your name."
-name = greeting
+print TTY::Box.frame {"** Lets order your coffee through this terminal application **"}
+puts "First, please = type your name."
+name = Name.new.get_name
 #calling greeting method to get customer's name
+
 system 'clear'
 puts "Hi, #{name}"
 puts 'Would you like to plece an order today?'
-
 order_list_array = []
 order_list_array.push customise_coffee
 # customise_coffee method creats instance of the coffee class and put into the array.
@@ -78,20 +67,22 @@ while exit == false
         system 'clear'
         puts "YOUR ORDER LIST"
         show_order_list(order_list_array)
-        puts "Total bill is $#{total_price}"
-        prompt.yes?('Press Enter or type yes to go back to menu.')
+        puts "Total price is $#{total_price}"
+        prompt.yes?('Press \'Enter\' or type \'y\' to go back to menu.')
     when "Check out"
         system 'clear'
         prompt = TTY::Prompt.new
         show_order_list(order_list_array)
         puts "Thank you for your order, #{name}"
-        puts "It's going to be $#{total_price} for today"
-        puts "Type yes to confirm your order, no to go back to menu"
+        puts "Total price is $#{total_price}"
+        puts "Type \'y\' to confirm your order, \'no\' to go back to Menu"
         # giving a choice to go back to menu or confirm the order depends on users input
         answer = gets.chomp
         if answer == 'Yes' or answer == 'yes' or  answer == 'y'
+            system 'clear'
             puts "Thank you for your order, #{name}"
-            puts font.write("Bye Bye", letter_spacing: 2)
+            puts "You order has been sent."
+            puts font.write("Bye Bye", letter_spacing: 2).colorize(:blue)
             download_csv(order_list_array,name)
             exit = true
         end
@@ -101,24 +92,24 @@ while exit == false
         system 'clear'
         puts "YOUR ORDER LIST"
         show_order_list(order_list_array)
-        puts "Total bill is $#{total_price}"
-        puts "which number of coffee would like to remove from list?"
+        puts "Total price is $#{total_price}"
+        puts "Type a number of coffee you like to remove."
         number = gets
-        while number.to_i > order_list_array.length
+            while number.to_i > order_list_array.length
                 box = TTY::Box.error("Type a number within the list")
                 print box
                 number = gets.chomp
-        end
+            end
         order_list_array.delete_at(number.to_i-1)
         # order_list_array is assigned by a numerical index starting from 1. 
         # need to minus 1 from number as deleteing using the index of order_list_array
         system 'clear'
-        puts "NoW, YOUR ORDER LIST"
+        puts "YOUR ORDER LIST HAS BEEN CHANGED"
         show_order_list(order_list_array)
         total_price = order_list_array.map{|coffee| coffee.get_price}.inject(:+)
         # calculating totalprice again after deleting item from order_array_list
-        puts "Now you total bill is $#{total_price}"
-        prompt.yes?('Press Enter or type yes to go back to menu.')
+        puts "Total price is now $#{total_price}"
+        prompt.yes?('Press \'Enter\' or type \'y\' to go back to Menu.')
     when "Exit".colorize(:yellow)
         exit = true
     end
