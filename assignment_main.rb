@@ -1,4 +1,6 @@
 require "tty-prompt"
+require "csv"
+# require 'ruby_figlet'
 require_relative './coffee'
 
 def show_menu_option
@@ -20,18 +22,27 @@ end
 #     end 
 # end 
 
-
 def show_order_list(order_list_array)
     for x in 0..(order_list_array.length - 1)
         puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} #{order_list_array[x].milk} #{order_list_array[x].sugar} #{order_list_array[x].extra}"
     end 
 end
+# def instance_to_array(order_list_array)
+#     print_array = []
+#     for x in 0..(order_list_array.length - 1)
+#        order_list_array[x].size, order_list_array[x].type, order_list_array[x].milk
+#     end 
+#     return print_array
+# end
 
-def download_csv
+
+def download_csv(order_list_array)
     # To a file
-    CSV.open("./file.csv", "wb") do |csv|
-      csv << "YOUR VARIABLE"
-    end
+    CSV.open("./file.csv", "w") do |csv|
+      csv << [order_list_array[0].type]
+      csv << [order_list_array[0].size]
+      csv << [order_list_array[0].milk]
+     end
 end
 
 def greeting
@@ -45,6 +56,9 @@ def greeting
 end
 
 system 'clear'
+# two_lines = RubyFiglet::Figlet.new "Welcome to\nCoder Coffee", 'basic'
+# two_lines.show
+
 puts "Welcome to Coder Coffee"
 puts "First, please type your name."
 name = greeting
@@ -87,6 +101,7 @@ while exit == false
         answer = gets.chomp
         if answer == 'Yes' or answer == 'yes' or  answer == 'y'
             puts "Thank you for your order, #{name}"
+            download_csv(order_list_array)
             exit = true
         end
         # download_csv(send_order,total_price)
@@ -105,7 +120,7 @@ while exit == false
         puts "NoW, YOUR ORDER LIST"
         show_order_list(order_list_array)
         total_price = order_list_array.map{|coffee| coffee.get_price}.inject(:+)
-        # calculating totalprice again after deleting item from order_list_array
+        # calculating totalprice again after deleting item from order_array_list
         puts "Now you total bill is $#{total_price}"
         prompt.yes?('Press Enter or type yes to go back to menu.')
     when "Exit"
