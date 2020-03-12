@@ -3,28 +3,23 @@ require_relative './coffee'
 
 def show_menu_option
     prompt = TTY::Prompt.new
-    options = prompt.select("SELECT MENU") do |menu|
-        menu.choice 'ADD ITEM TO MY ORDER' 
-        menu.choice 'REMOVE ITEM FROM MY ORDER' 
-        menu.choice 'VIEW MY ORDER'
-        menu.choice 'CHECK OUT'
-        menu.choice 'EXIT'
+    options = prompt.select("Please select one of the options") do |menu|
+        menu.choice 'Add another item to order' 
+        menu.choice 'Change/remove item from order' 
+        menu.choice 'View order'
+        menu.choice 'Check out'
+        menu.choice 'Exit'
     end
     return options
 end
 
-def greeting
-    puts "Welcome to Coder Coffee"
-    puts "First, please type your name"
-    name = gets.chomp
-    while name.empty?
-        puts "Please type your name"
-        name = gets.chomp
-    end
-    system 'clear'
-    puts "Hi, #{name}"
-    puts 'Would you like to plece an order today?'
-end
+# class Get_name
+#     attr_reader :name
+#     def initialize(name)
+#         @name = name
+#     end 
+# end 
+
 
 def show_order_list(order_list_array)
     for x in 0..(order_list_array.length - 1)
@@ -32,53 +27,88 @@ def show_order_list(order_list_array)
     end 
 end
 
+def download_csv
+    # To a file
+    CSV.open("./file.csv", "wb") do |csv|
+      csv << "YOUR VARIABLE"
+    end
+end
+
+def greeting
+    name = gets.chomp
+    while name.empty?
+        puts "Please type your name"
+        name = gets.chomp
+    end
+    system 'clear'
+    return name
+end
+
 system 'clear'
-greeting()
+puts "Welcome to Coder Coffee"
+puts "First, please type your name."
+name = greeting
+#calling greeting method to get customer's name
+system 'clear'
+puts "Hi, #{name}"
+puts 'Would you like to plece an order today?'
+
 order_list_array = []
-# price_list = []
-# customised_coffee is an instance of Coffee class
 order_list_array.push customise_coffee
+# customise_coffee method creats instance of the coffee class and put into the array.
 show_order_list(order_list_array)
+# shows what items has been put in the order list
 exit = false
+# defined exit veriable to exit from the loop below
 while exit == false
-    option = show_menu_option()
+    selected_option = show_menu_option()
     total_price = order_list_array.map {|coffee| coffee.get_price}.inject(:+)
-    case option
-    when "ADD ITEM TO MY ORDER"
+    # calculation for total price of all items in order_list_array
+    case selected_option
+    when "Add another item to order"
         system 'clear'
         order_list_array.push customise_coffee
-    when "VIEW MY ORDER"
+        # adding new instance which is another customized coffee to the order list
+    when "View order"
         prompt = TTY::Prompt.new
         system 'clear'
         puts "YOUR ORDER LIST"
         show_order_list(order_list_array)
-        puts "Total bill is $#{total_price} so far"
-        prompt.yes?('Press Enter to go back to Menu')
-    when "CHECK OUT"
+        puts "Total bill is $#{total_price}"
+        prompt.yes?('Press Enter or type yes to go back to menu.')
+    when "Check out"
         system 'clear'
         prompt = TTY::Prompt.new
-        send_order = show_order_list(order_list_array)
-        puts "Thank you for your order"
+        show_order_list(order_list_array)
+        puts "Thank you for your order, #{name}"
         puts "It's going to be $#{total_price} for today"
-        exit = true
-        prompt.yes?('Confirm your order? Yes: You order will be sent to waiting list.')
+        puts "Type yes to confirm your order, no to go back to menu"
+        # giving a choice to go back to menu or confirm the order depends on users input
+        answer = gets.chomp
+        if answer == 'Yes' or answer == 'yes' or  answer == 'y'
+            puts "Thank you for your order, #{name}"
+            exit = true
+        end
         # download_csv(send_order,total_price)
-    when "REMOVE ITEM FROM MY ORDER"
+    when "Change/remove item from order"
         prompt = TTY::Prompt.new
         system 'clear'
         puts "YOUR ORDER LIST"
         show_order_list(order_list_array)
-        puts "Total bill is $#{total_price} so far"
+        puts "Total bill is $#{total_price}"
         puts "which number of coffee would like to remove from list?"
         number = gets.chomp
         order_list_array.delete_at(number.to_i-1)
+        # order_list_array is assigned by a numerical index starting from 1. 
+        # need to minus 1 from number as deleteing using the index of order_list_array
         system 'clear'
         puts "NoW, YOUR ORDER LIST"
         show_order_list(order_list_array)
         total_price = order_list_array.map{|coffee| coffee.get_price}.inject(:+)
+        # calculating totalprice again after deleting item from order_list_array
         puts "Now you total bill is $#{total_price}"
-        prompt.yes?('Press Enter to go back to Menu.')
-    when "EXIT"
+        prompt.yes?('Press Enter or type yes to go back to menu.')
+    when "Exit"
         exit = true
     end
 end
