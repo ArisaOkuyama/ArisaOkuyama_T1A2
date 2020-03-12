@@ -41,7 +41,7 @@ class Coffee
 end
 
 def customise_coffee
-    prompt = TTY::Prompt.new
+    prompt = TTY::Prompt.new(symbols: {marker: '⬡'})
     coffee_type = prompt.select("Please choose coffee type") do |menu|
         puts "Use ←/→ arrow keys for more choise"
         menu.choice 'Flat White'
@@ -68,8 +68,8 @@ def customise_coffee
         coffee_milk = prompt.select("Please choose type of milk ") do |menu|
         menu.choice 'Full Milk'
         menu.choice 'Skim Milk'
-        menu.choice 'Almond Milk'
-        menu.choice 'Soy Milk'
+        menu.choice 'Almond Milk +50c '
+        menu.choice 'Soy Milk +50c'
         end
     end
     coffee_sugar = prompt.select("Would you like sugar in your coffee?") do |menu|
@@ -78,13 +78,13 @@ def customise_coffee
         menu.choice '1 sugar'
         menu.choice '2 sugar'
         menu.choice '3 sugar'
-        menu.choice '4 sugar'
-        menu.choice '5 sugar. Are you sure?'
+        menu.choice '4 sugar'.colorize(:yellow)
+        menu.choice '5 sugar. Are you sure?'.colorize(:red)
     end
     coffee_extra = prompt.select("Optinal" ) do |menu|
         puts 'Use ↑/↓ arrow keys, press Space to select and Enter to finish'
         menu.choice 'No thank you'
-        menu.choice 'Extra hot'
+        menu.choice 'Extra hot'.colorize(:red)
         menu.choice 'half strangh'
         menu.choice 'quoter strangh'
         menu.choice 'decaf'

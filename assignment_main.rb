@@ -22,14 +22,6 @@ def show_order_list(order_list_array)
         puts "[#{x+1}].#{order_list_array[x].size} #{order_list_array[x].type} #{order_list_array[x].milk} #{order_list_array[x].sugar} #{order_list_array[x].extra}"
     end 
 end
-# def instance_to_array(order_list_array)
-#     print_array = []
-#     for x in 0..(order_list_array.length - 1)
-#        order_list_array[x].size, order_list_array[x].type, order_list_array[x].milk
-#     end 
-#     return print_array
-# end
-
 
 def download_csv(order_list_array,name)
     # To a file
@@ -54,9 +46,11 @@ system 'clear'
 # two_lines = RubyFiglet::Figlet.new "Welcome to\nCoder Coffee", 'basic'
 # two_lines.show
 font = TTY::Font.new(:doom)
-puts font.write("Welcome   to", letter_spacing: 2)
-puts font.write("* Coder Coffee", letter_spacing: 2)
-puts "First, please type your name.".colorize(:blue)
+puts font.write("Welcome   to", letter_spacing: 2).colorize(:yellow)
+puts font.write("* Coder Coffee", letter_spacing: 2).colorize(:yellow)
+
+print TTY::Box.frame {"*** Lets order your coffee through this terminal application **"}
+puts "First, please type your name."
 name = greeting
 #calling greeting method to get customer's name
 system 'clear'
@@ -109,7 +103,12 @@ while exit == false
         show_order_list(order_list_array)
         puts "Total bill is $#{total_price}"
         puts "which number of coffee would like to remove from list?"
-        number = gets.chomp
+        number = gets
+        while number.to_i > order_list_array.length
+                box = TTY::Box.error("Type a number within the list")
+                print box
+                number = gets.chomp
+        end
         order_list_array.delete_at(number.to_i-1)
         # order_list_array is assigned by a numerical index starting from 1. 
         # need to minus 1 from number as deleteing using the index of order_list_array
@@ -120,7 +119,7 @@ while exit == false
         # calculating totalprice again after deleting item from order_array_list
         puts "Now you total bill is $#{total_price}"
         prompt.yes?('Press Enter or type yes to go back to menu.')
-    when "Exit"
+    when "Exit".colorize(:yellow)
         exit = true
     end
 end
