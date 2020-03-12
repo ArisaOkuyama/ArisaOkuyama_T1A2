@@ -25,10 +25,10 @@ def show_order_list(order_list)
 end
 
 def enter_exit
-    puts "Please press press any key to menu"
+    puts "Please press any key to menu option"
     enter = gets
     while enter.empty?
-        "Please press press any key to menu"
+        "Please press any key to menu option"
         enter = gets
     end
 end
@@ -70,20 +70,23 @@ while exit == false
         enter_exit
     when "Check out"
         system 'clear'
+        puts "YOUR ORDER LIST"
         show_order_list(order_list)
-        puts "Thank you for your order, #{name}"
-        puts "Total price is $#{total_price}"
-        puts "Type \'y\' to confirm your order, \'no\' to go back to Menu"
         # giving a choice to go back to menu or confirm the order depends on users input
-        answer = gets.chomp
-        if answer == 'Yes' or answer == 'yes' or  answer == 'y'
+        prompt = TTY::Prompt.new(symbols: {marker: '⬡'})
+        answer = prompt.select("Would you like to confirm and send your order to Coder Cofffee?") do |menu|
+            menu.choice 'Yes, I am ready'
+            menu.choice 'No, go back to menu'
+        end
+           if answer == 'Yes, I am ready'
             system 'clear'
             puts "Thank you for your order, #{name}"
             puts "You order has been sent."
             puts font.write("Bye Bye", letter_spacing: 2).colorize(:blue)
             print = CustomiseCoffee.new.download_csv(name, order_list, total_price)
             exit = true
-        end
+           else
+           end
         # upload_csv(send_order,total_price)
     when "Change/remove item from order"
         prompt = TTY::Prompt.new
