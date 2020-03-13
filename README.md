@@ -72,5 +72,3 @@ https://github.com/ArisaOkuyama/ArisaOkuyama_T1A2
 ```
 ruby assignment_main.rb
 ```
-# R17 Test run
-# R19 
