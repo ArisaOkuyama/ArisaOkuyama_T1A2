@@ -33,7 +33,7 @@ class CustomiseCoffee
             menu.choice 'Double Espresso'
         end
         case coffee_type
-        when 'Flat White', 'Latte','Cappucino', 'Long Black', 'Mocha', 'Chai Latte', 'Hot Chocolate'
+        when 'Flat White', 'Latte','Cappuccino', 'Long Black', 'Mocha', 'Chai Latte', 'Hot Chocolate'
             coffee_size = prompt.select("Please choose size of coffee ") do |menu|
             menu.choice 'Small'
             menu.choice 'Medium'
@@ -41,7 +41,7 @@ class CustomiseCoffee
             end
         end
         case coffee_type
-        when 'Flat White', 'Latte', 'Cappucino', 'Mocha', 'Chai Latte', 'Piccolo'
+        when 'Flat White', 'Latte', 'Cappuccino', 'Mocha', 'Chai Latte', 'Piccolo'
             coffee_milk = prompt.select("Please choose type of milk ") do |menu|
             menu.choice 'Full Milk'
             menu.choice 'Skim Milk'
