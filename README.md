@@ -8,7 +8,7 @@ One similar existing system is what they use in McDonald's; a touch panel screen
 The target audience will be owners of small business who wish to run their peak time smoothly with no extra labour. Users of this application will be customers of the business. Therefore, I made this application with a simple user-friendly interface for everyone, including those who don't know much about technology.
 Customers will be able to place an order directly to the terminal application instead of ordering via a staff member.
 
-# R6 - features
+# R6 - Features
 1. One feature is customizing your coffee the way you like by selecting 5 different questions; coffee type, size, milk type, sugar, extra. The application will use a method to add this to your ordering list. 
 The answers of each question will be saved under a local variable to create an instance of Coffee class. Then values of the instance will be used for calculating the price of coffee in the Price class.  
 I used Ruby TTP Prompt for all questions so the user only selects one answer per question from the list. 
@@ -34,10 +34,11 @@ Exit from this terminal.
 
 # R8 Diagram  
 
-![Diagram](./docs/Diagram.pdf)
+![Diagram](./docs/diagram.pdf)
 
-# R9 
-trello screen shoot
+# R9 Trello
+![Trello](https://trello.com/b/VOCYKtbk/assignment)  
+![Screen shot](./docs/screenshotoftrello.jpeg)
 
 # R10 How to use and install the application  
 
@@ -71,6 +72,5 @@ https://github.com/ArisaOkuyama/ArisaOkuyama_T1A2
 ```
 ruby assignment_main.rb
 ```
-
 # R17 Test run
-# R19 ?
+# R19 
