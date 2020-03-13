@@ -1,8 +1,5 @@
 class Name
     attr_reader :name
-    # def initialize
-    #     @name
-    # end
     def get_name
         name = gets.chomp
         while name.empty?
