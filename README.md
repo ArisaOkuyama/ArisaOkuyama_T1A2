@@ -1,6 +1,6 @@
 # R4 
 https://github.com/ArisaOkuyama/ArisaOkuyama_T1A2
-# R5 - statement of purpose and scope
+# R5 - Statement of purpose and scope
 When you run a cafe/restaurant, a common problem is that you don't have enough budget to hire extra staff for the rush hours. In contras, customers have to wait longer during peak time. I often see a long queue at the cafe for customers to order their morning coffee/food before they go to work.  
 I have made this self-ordering application to use instead of a staff member. 
 Therefore, the existing staff members can prioritize producing drinks and food. The cafe can then run as efficiently with the same number of staff.    
@@ -23,18 +23,18 @@ Then some questions will be displayed with options to choose from. Use ↑/↓ a
 After answering all the questions, a menu bar will appear, select your option from the menu bar.  
 - Add item to order  
 When you want to add more coffee to you order, press this menu. It takes you to further questions so add another coffee to your order.
-- Remove item from order
+- Remove item from order  
 When you want to remove items from list, choose this option. It shows the current list of your items in your order and the total price. Then type the number of the item you would like to remove and press Enter. It will show you the new order list after deleting the item with the total price. 
-- View order
+- View order  
 When you want to check your current order list. It will show you a list of your order. 
-- Check out
+- Check out  
 When you want to send you order to the system after finalizing your order, choose this option. It shows your total price and list of your coffee you ordered.
-- EXIT
+- EXIT  
 Exit from this terminal. 
 
 # R8 Diagram  
 
-[Diagram](./docs/diagram.pdf)
+![Diagram](./docs/diagram.jpeg)
 
 # R9 Trello
 [Trello](https://trello.com/b/VOCYKtbk/assignment)  
@@ -50,25 +50,9 @@ Exit from this terminal.
   * TTY::Box
   * Colorize 
 
-### Steps
+### Steps  
+The easiest way to install is to type into your command  
+``` 
+./codercoffee.sh
+```
 
-1. Install Ruby **2.7.0** version to your computer if you haven't installed or updated the version.  
-Install Ruby : https://www.ruby-lang.org/en/documentation/installation/
-2. Install Ruby Gems. Those following gems are required to run this application
-TTY::Prompt https://github.com/piotrmurach/tty-prompt  
-TTY::Font  https://github.com/piotrmurach/tty-font  
-TTY::Box  https://github.com/piotrmurach/tty-box  
-Colorize  https://github.com/fazibear/colorize   
-
-```
-gem install tty-prompt
-gem install tty-font
-gem install tty-box
-gem install colorize
-```
-3. Execute the below command to run this file.  
-
-https://github.com/ArisaOkuyama/ArisaOkuyama_T1A2
-```
-ruby assignment_main.rb
-```
