@@ -34,10 +34,10 @@ Exit from this terminal.
 
 # R8 Diagram  
 
-![Diagram](./docs/diagram.pdf)
+[Diagram](./docs/diagram.pdf)
 
 # R9 Trello
-![Trello](https://trello.com/b/VOCYKtbk/assignment)  
+[Trello](https://trello.com/b/VOCYKtbk/assignment)  
 ![Screen shot](./docs/screenshotoftrello.jpeg)
 
 # R10 How to use and install the application  
